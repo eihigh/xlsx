@@ -1011,8 +1011,8 @@ func ReadZipReaderWithRowLimit(r *zip.Reader, rowLimit int) (*File, error) {
 	var sheetXMLMap map[string]string
 	var sheetsByName map[string]*Sheet
 	var sheets []*Sheet
-	var style *xlsxStyleSheet
-	var styles *zip.File
+	// var style *xlsxStyleSheet
+	// var styles *zip.File
 	var themeFile *zip.File
 	var v *zip.File
 	var workbook *zip.File
@@ -1030,8 +1030,8 @@ func ReadZipReaderWithRowLimit(r *zip.Reader, rowLimit int) (*File, error) {
 			workbook = v
 		case "xl/_rels/workbook.xml.rels":
 			workbookRels = v
-		case "xl/styles.xml":
-			styles = v
+		// case "xl/styles.xml":
+		// 	styles = v
 		case "xl/theme/theme1.xml":
 			themeFile = v
 		default:
@@ -1066,14 +1066,14 @@ func ReadZipReaderWithRowLimit(r *zip.Reader, rowLimit int) (*File, error) {
 
 		file.theme = theme
 	}
-	if styles != nil {
-		style, err = readStylesFromZipFile(styles, file.theme)
-		if err != nil {
-			return nil, err
-		}
-
-		file.styles = style
-	}
+	// if styles != nil {
+	// 	style, err = readStylesFromZipFile(styles, file.theme)
+	// 	if err != nil {
+	// 		return nil, err
+	// 	}
+	//
+	// 	file.styles = style
+	// }
 	sheetsByName, sheets, err = readSheetsFromZipFile(workbook, file, sheetXMLMap, rowLimit)
 	if err != nil {
 		return nil, err
